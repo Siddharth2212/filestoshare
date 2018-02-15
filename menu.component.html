@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div *ngFor="let dish of dishes" class="col-md-6">
+
+      <img src="{{dish.image}}" alt="test"  class="img-responsive dishImage">
+
+      <div class="carousel-caption">
+        <h1>{{dish.name | uppercase}}</h1>
+      </div>
+
+    </div>
+  </div>
+</div>
