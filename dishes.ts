@@ -87,7 +87,7 @@ var dishes = [{
       {
         rating: 4,
         comment: 'Ultimate dish! ',
-        author: 'Shivam Singhh',
+        author: 'Shivam Singh',
         date: '2013-12-02T17:57:28.556094Z'
       },
       {
