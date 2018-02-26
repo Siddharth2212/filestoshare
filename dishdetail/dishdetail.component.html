@@ -1,0 +1,133 @@
+<div *ngIf="dish" class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <img style="height: 450px;" class="card-img-top" src="{{dish.image}}" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">{{dish.name}}</h4>
+          <p class="card-text">{{dish.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <button (click)="goBack()">Go Back</button>
+            <button [routerLink]="['/dishdetail', prev]">Prev</button>
+            <button [routerLink]="['/dishdetail', next]">Next</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="container">
+        <div class="row">
+          <div style="font-size: 1.2em;" class="col-md-9" id="comments">
+            <h3 class="mb-2">Comments</h3>
+            <!-- comment -->
+            <div *ngFor="let comment of dish.comments" class="comment mb-2 row">
+              <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
+                <a href="">
+                  <i style="color: grey;" class="fa fa-user"></i>
+                </a>
+              </div>
+              <div class="comment-content col-md-11 col-sm-10">
+                <h6 class="small comment-meta"><a href="#">{{comment.author}}</a> </h6>
+                <i style="font-size: 16px;">{{comment.rating}} stars </i> &nbsp;&nbsp; <i style="font-size: 16px;">{{comment.date | date}}</i>
+                <div class="comment-body">
+                  <p>
+                    {{comment.comment}}
+                  </p>
+                </div>
+              </div>
+              <!-- /reply is indented -->
+            </div>
+            <div *ngIf="commentForm.value.comment" class="comment mb-2 row">
+              <div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
+                <a href="">
+                  <i style="color: grey;" class="fa fa-user"></i>
+                </a>
+              </div>
+              <div class="comment-content col-md-11 col-sm-10">
+                <h6 class="small comment-meta"><a href="#">{{commentForm.value.author}}</a> </h6>
+                <i style="font-size: 16px;">{{commentForm.value.rating}} stars </i> &nbsp;&nbsp; <i style="font-size: 16px;">{{commentForm.value.date | date}}</i>
+                <div class="comment-body">
+                  <p>
+                    {{commentForm.value.comment}}
+                  </p>
+                </div>
+              </div>
+              <!-- /reply is indented -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="container">
+            <!--<p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>-->
+            <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-md-12">
+                  <h2>Send us your Feedback</h2>
+                  <hr>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div [ngClass]="{'has-danger': formErrors.author}" class="form-group" >
+                    <label class="sr-only" for="author">First Name</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                      <input type="text" formControlName="author" class="form-control" id="author"
+                             placeholder="Author" required>
+                    </div>
+                  </div>
+                  <div class="form-control-feedback">
+                      <span class="text-danger align-middle">
+                           {{formErrors.author}}
+                      </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div [ngClass]="{'has-danger': formErrors.rating}" class="form-group">
+                    <label class="sr-only" for="rating">Rating</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                      <input type="number" formControlName="rating" class="form-control" id="rating"
+                             placeholder="Rating" required>
+                    </div>
+                  </div>
+                  <div class="form-control-feedback">
+                      <span class="text-danger align-middle">
+                           {{formErrors.rating}}
+                      </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div [ngClass]="{'has-danger': formErrors.comment}" class="form-group">
+                    <label class="sr-only" for="comment">Comment</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-phone"></i></div>
+                      <textarea formControlName="comment" class="form-control" id="comment" rows="6"
+                             placeholder="Comment">
+                      </textarea>
+                    </div>
+                  </div>
+                  <div class="form-control-feedback">
+                      <span class="text-danger align-middle">
+                           {{formErrors.comment}}
+                      </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="padding-top: 1rem">
+                <div class="col-md-12">
+                  <button [disabled]="commentForm.invalid" type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Send</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner *ngIf="!dish"></app-spinner>
